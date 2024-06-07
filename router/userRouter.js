@@ -9,5 +9,6 @@ router.get("/", userController.getLoginPage);
 router.get("/isPremiumUser", userAuthentication, userController.isPremiumUser);
 router.post("/login", userController.postUserLogin);
 router.post("/signUp", userController.postUserSignUp);
+router.get("/getAllUsers", userController.getAllUsers);
 
 module.exports = router;
