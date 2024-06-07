@@ -1,13 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const userControlller = require("../controllers/userController");
+const userController = require("../controllers/userController");
+const userAuthentication = require("../middleware/auth");
 
-router.use(express.static('public'));
+router.use(express.static("public"));
 
-router.get("/" , userControlller.getLoginPage);
-
-router.post("/login", userControlller.postUserLogin);
-
-router.post("/signup", userControlller.postUserSignUp);
+router.get("/", userController.getLoginPage);
+router.get("/isPremiumUser", userAuthentication, userController.isPremiumUser);
+router.post("/login", userController.postUserLogin);
+router.post("/signUp", userController.postUserSignUp);
 
 module.exports = router;
