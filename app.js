@@ -5,6 +5,7 @@ const sequelize = require("./utils/database");
 const expenseRouter = require("./router/expenseRouter");
 const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
+const resetPasswordRouter = require("./router/resetPasswordRouter");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -12,6 +13,7 @@ dotenv.config();
 const User = require("./models/userModel");
 const Expense = require("./models/expenseModel");
 const Order = require("./models/ordersModel");
+const ResetPassword = require("./models/resetPasswordModel");
 
 
 const app = express();
@@ -29,6 +31,8 @@ app.use("/purchase" , purchaseMembershipRouter);
 
 app.use("/premium", leaderboardRouter);
 
+app.use("/password", resetPasswordRouter);
+
 // app.listen(3000 , () => {console.log("server is running in 3000 port")});
 
 User.hasMany(Expense);
@@ -36,6 +40,9 @@ Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+ResetPassword.belongsTo(User);
+User.hasMany(ResetPassword);
 
 sequelize.sync()
 .then(() => {
