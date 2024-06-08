@@ -6,6 +6,7 @@ const expenseRouter = require("./router/expenseRouter");
 const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
 const resetPasswordRouter = require("./router/resetPasswordRouter");
+const reportsRouter = require("./router/reportsRouter");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -32,6 +33,8 @@ app.use("/purchase" , purchaseMembershipRouter);
 app.use("/premium", leaderboardRouter);
 
 app.use("/password", resetPasswordRouter);
+
+app.use("/reports", reportsRouter);
 
 // app.listen(3000 , () => {console.log("server is running in 3000 port")});
 
