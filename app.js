@@ -7,9 +7,27 @@ const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
 const resetPasswordRouter = require("./router/resetPasswordRouter");
 const reportsRouter = require("./router/reportsRouter");
+const path = require("path");
+const fs = require('fs');
 
 const dotenv = require("dotenv");
 dotenv.config();
+
+const helmet = require("helmet");
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+const morgan = require("morgan");
+app.use(morgan("combined", { stream: accessLogStream }));
 
 const User = require("./models/userModel");
 const Expense = require("./models/expenseModel");
@@ -49,7 +67,7 @@ User.hasMany(ResetPassword);
 
 sequelize.sync()
 .then(() => {
-    app.listen(3000 , () => {console.log("server is running in 3000 port")});
+    app.listen(process.env.PORT || 3000 , () => {console.log("server is running in 3000 port")});
 })
 .catch((err) => {
     console.error(err);
